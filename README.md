@@ -1,5 +1,5 @@
 # Flight Search 
-Flight Search is an Android project that demonstrates my mastery of Jetpack Compose, Room, and StateFlow. 
+Flight Search is an Android project that demonstrates my mastery of Jetpack Compose, Room and StateFlow. 
 The main screen shows the user's favorite routes. 
 On the search screen, the user can search for an airport present within the database.
 Once an airport is selected, he displays a list of potential routes from that airport and can bookmark a new route.
