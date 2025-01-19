@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Flight Search</string>
+    <string name="loading_failed">Unable to retrieve data from database</string>
+    <string name="search">Search Airport</string>
+    <string name="close_search_bar">Close search bar</string>
+    <string name="select_departure_airport">Select departure airport</string>
+    <string name="select_arrival_airport">Select arrival airport</string>
+    <string name="back_to_home_screen">Back to homescreen</string>
+</resources>
