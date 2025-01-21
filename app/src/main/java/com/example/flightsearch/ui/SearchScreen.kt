@@ -40,7 +40,6 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.flightsearch.R
 import com.example.flightsearch.data.entity.Airport
 import com.example.flightsearch.ui.common.AirportRow
@@ -150,6 +149,15 @@ fun SearchBarActiveScreen(
     modifier: Modifier = Modifier
 ) {
 
+    val selectAirportStringResource =
+        if(!airportUiState.isAirportSelected)
+            R.string.select_departure_airport
+        else R.string.select_arrival_airport
+
+    val iconResource =
+        if(!airportUiState.isAirportSelected)
+            R.drawable.departure_icon
+    else R.drawable.arrival_icon
 
     Column(modifier = modifier) {
         Row(
@@ -159,13 +167,13 @@ fun SearchBarActiveScreen(
         ) {
             Icon(
                 painter = painterResource(
-                    R.drawable.departure_icon),
+                    iconResource),
                 tint = MaterialTheme.colorScheme.primary,
                 contentDescription = null
             )
             Spacer(modifier = Modifier.width(dimensionResource(R.dimen.padding_small)))
             Text(
-                text = stringResource(R.string.select_departure_airport),
+                text = stringResource(selectAirportStringResource),
                 style = MaterialTheme.typography.titleSmall,
             )
 
@@ -195,7 +203,6 @@ fun AirportRoutesScreen(
     modifier: Modifier = Modifier
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
-    keyboardController?.hide()
 
     val isAtTop by remember {
         derivedStateOf {

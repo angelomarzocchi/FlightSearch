@@ -4,8 +4,13 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -19,9 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.flightsearch.R
-import com.example.flightsearch.data.entity.FavoriteRoute
 import com.example.flightsearch.ui.common.FavoriteRouteCard
 import com.example.flightsearch.ui.navigation.NavigationDestination
 import com.example.flightsearch.ui.theme.FlightSearchTheme
@@ -57,6 +60,7 @@ fun HomeScreen(
             favoriteRouteUiState.value.favoriteRouteList,
             key = { favoriteRoute -> favoriteRoute.favoriteId }) { favoriteRoute ->
             val isLastItem = favoriteRoute == favoriteRouteUiState.value.favoriteRouteList.last()
+            val insetsModifier = Modifier.fillMaxWidth().windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Horizontal))
             FavoriteRouteCard(
                 departureCode = favoriteRoute.departureCode,
                 departureName = favoriteRoute.departureName,
@@ -64,7 +68,8 @@ fun HomeScreen(
                 destinationName = favoriteRoute.destinationName,
                 isFavoriteSelected = true,
                 onFavoriteClick = { airportViewModel.deleteFavoriteRoute(favoriteRoute) },
-                modifier = if(!isLastItem) Modifier.fillMaxWidth() else Modifier.fillMaxWidth().padding(bottom = paddingValues.calculateBottomPadding())
+                modifier = if(!isLastItem) insetsModifier else insetsModifier.windowInsetsPadding(WindowInsets.safeDrawing.only(
+                    WindowInsetsSides.Bottom))
 
             )
         }

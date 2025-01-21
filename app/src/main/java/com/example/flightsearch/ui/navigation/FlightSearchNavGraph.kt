@@ -4,6 +4,11 @@ import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
@@ -15,6 +20,7 @@ import com.example.flightsearch.ui.HomeDestination
 import com.example.flightsearch.ui.HomeScreen
 import com.example.flightsearch.ui.SearchDestination
 import com.example.flightsearch.ui.SearchScreen
+import kotlinx.coroutines.delay
 
 @Composable
 fun FlightSearchNavHost(
@@ -23,6 +29,8 @@ fun FlightSearchNavHost(
     airportViewModel: AirportViewModel = viewModel(factory = AppViewModelProvider.Factory),
     modifier: Modifier = Modifier
 ) {
+
+    var isNavigating by remember { mutableStateOf(false) }
     NavHost(
         navController = navController,
         startDestination = HomeDestination.route,
@@ -30,7 +38,12 @@ fun FlightSearchNavHost(
     ) {
       composable(route = HomeDestination.route) {
           HomeScreen(
-              onSearchClick = { navController.navigate(SearchDestination.route)},
+              onSearchClick = {
+                  if(!isNavigating) {
+                      isNavigating = true
+                      navController.navigate(SearchDestination.route)
+                  }
+                              },
               paddingValues = paddingValues,
               airportViewModel = airportViewModel
           )
@@ -57,11 +70,16 @@ fun FlightSearchNavHost(
               )
           }
       ) {
+          LaunchedEffect(key1 = isNavigating) {
+              delay(720)
+              isNavigating = false
+          }
           SearchScreen(
               navigateBack = { navController.navigateUp() },
               paddingValues = paddingValues,
               airportViewModel = airportViewModel
           )
+
       }
         }
 }

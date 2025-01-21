@@ -30,11 +30,12 @@ import com.example.flightsearch.ui.navigation.FlightSearchNavHost
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FlightSearchApp(
+    modifier: Modifier = Modifier
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
     Scaffold(
-        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = { FlightSearchTopBar(scrollBehavior = scrollBehavior) }
     ) {innerPadding ->
         Surface(
